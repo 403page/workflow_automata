@@ -1,0 +1,4 @@
+module load vcs/2017.03
+vcs -full64 -f chain_elab_file_list -j4 -override_timescale=1ns/1ps -o run.simv -debug_access+all -l ./log/elab.log
+_cp_mark
+_run_mark

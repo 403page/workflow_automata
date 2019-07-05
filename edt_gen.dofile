@@ -1,0 +1,27 @@
+//set_context dft -no_rtl
+//set_context pattern -scan
+
+// read_cell_library
+read_cell_library /home/gd6b/fe/wanghua/view1/scan/common_file/lib/mgc/libcomp.atpglib
+// read_verilog
+_read_verilog_mark
+
+_block_name_mark
+dofile ./${BLOCK}.spf.do
+// edt settings for this block
+_edt_channel_mark
+set edt -longest_chain_range 200 4500
+
+// common edt settings
+set edt power_controller shift enabled -min_switching_threshold_percentage 26
+set edt pins low_power_shift_en edt_lowpower_shift_en_i
+set edt pins bypass edt_bypass_i
+set edt -compactor xpress
+set_edt_options -location internal
+//set_edt_options -allow_channel_sharing ON -separate_control_data_channel on
+
+set system mode atpg
+report edt config -verbose
+
+// write edt files
+write edt files ./result/${BLOCK} -verilog -signal_type std_ulogic -synthesis_script dc_tcl -rtl_prefix edt_main -replace
